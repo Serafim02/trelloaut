@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag e Drop</title>
+    <style>
+        .box{
+            height: 200px;
+            width: 200px;
+            border: 1px solid black;
+            margin: 0 50px;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+        }
+        .box .imagem {
+            background-image: url(imagem.jpg);
+            height: 100%;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <div class="imagem" draggable="true"></div>
+        </div>
+        <div class="box"></div>
+    </div>
+    <script>
+        const boxes = document.querySelectorAll(".box")
+        const imagens = document.querySelectorAll(".imagem")
+        // selecionamos as nossas box e imagem no html
+
+        let dragimg = null
+        // variavel para arrastar a imagem, esta igual a null pois ainda nao tem nenhuma imagem selecionada 
+
+        imagens.forEach ((imagem) => {
+            imagem.addEventListener("dragstart", () => {
+                dragimg = imagem
+                // armazena a imagem selecionada variavel dragimg
+            })
+        })
+
+        boxes.forEach((box) =>{
+            box.addEventListener("dragover", (event) => {
+                event.preventDefault();
+                // preventde fautl evita que a pagina recarregue 
+                box.classList.add("arrastada")
+                // adiciona uma classe quando paramos de arrastar 
+            })
+            box.addEventListener("dragleave", () => {
+                box.classList.remove("arrastada")
+            })
+            box.addEventListener("drop", () => {
+                box.appendChild(dragimg);
+                // cria um elemnteo dentro da box a imagem que selecionamas la em cima 
+                box.classList.remove("arrastada")
+            })
+            
+        })
+    </script>
+</body>
+</html>
